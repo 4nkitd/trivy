@@ -41,6 +41,7 @@ read -r -p "Github Username : " username
 curl  https://github.com/$username?tab=repositories | grep -w 'itemprop="name codeRepository"' | cut -d/ -f3 | cut -d'"' -f1 >> files.txt
 
 while IFS= read -r line; do
+    echo $line
     trivy repo  --security-checks vuln,config,secret https://github.com/$username/$line 
 done < files.txt
 ```

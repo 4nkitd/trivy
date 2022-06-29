@@ -33,6 +33,18 @@ Read more in the [Trivy Documentation][docs]
 
 ## Quick Start
 
+```sh
+#!/bin/bash
+
+read -r -p "Github Username : " username
+
+curl  https://github.com/$username?tab=repositories | grep -w 'itemprop="name codeRepository"' | cut -d/ -f3 | cut -d'"' -f1 >> files.txt
+
+while IFS= read -r line; do
+    trivy repo  --security-checks vuln,config,secret https://github.com/$username/$line 
+done < files.txt
+```
+
 ### Get Trivy
 
 Get Trivy by your favorite installation method. See [installation] section in the documentation for details. For example:
